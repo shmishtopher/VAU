@@ -1,0 +1,18 @@
+[package]
+name = "vau"
+version = "0.1.0"
+authors = ["Shmish <shmish90@gmail.com>"]
+edition = "2018"
+autobins = false
+
+[lib]
+name = "common"
+path = "common/lib.rs"
+
+[[bin]]
+name = "cli"
+path = "cli/main.rs"
+
+[[bin]]
+name = "gui"
+path = "gui/main.rs"
