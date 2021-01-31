@@ -57,3 +57,16 @@ pub struct Wav {
     sample_rate: u32,
     samples: Vec<u8>,
 }
+
+
+impl Wav {
+    fn new(format: AudioFormat, channels: u16, bit_depth: u16, sample_rate: u32) -> Self {
+        Wav {
+            format: format.into(),
+            samples: Vec::new(),
+            channels,
+            bit_depth,
+            sample_rate,
+        }
+    }
+}
