@@ -46,3 +46,14 @@ impl TryFrom<usize> for AudioFormat {
         }
     }
 }
+
+
+/// Wav represents a complete .wav file
+/// containing chunk headers and audio samples.
+pub struct Wav {
+    format: u16,
+    channels: u16,
+    bit_depth: u16,
+    sample_rate: u32,
+    samples: Vec<u8>,
+}
