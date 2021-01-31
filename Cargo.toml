@@ -5,6 +5,9 @@ authors = ["Shmish <shmish90@gmail.com>"]
 edition = "2018"
 autobins = false
 
+[dependencies]
+clap = "2.33.3"
+
 [lib]
 name = "common"
 path = "common/lib.rs"
