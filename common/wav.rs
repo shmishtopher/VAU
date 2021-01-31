@@ -69,6 +69,10 @@ impl Wav {
             sample_rate,
         }
     }
+
+    fn write(&mut self, bytes: &[u8]) {
+        self.samples.extend(bytes);
+    }
 }
 
 

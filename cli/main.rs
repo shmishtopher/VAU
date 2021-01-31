@@ -5,6 +5,7 @@
 
 use clap::App;
 use clap::Arg;
+use std::fs;
 
 
 fn main() {
@@ -27,4 +28,12 @@ fn main() {
             .short("f")
             .takes_value(true))
         .get_matches();
+
+
+    if let Ok(archive) = fs::read(matches.value_of("archive").unwrap()) {
+        
+    }
+    else {
+        println!("Error: Cannot find \"{}\"", matches.value_of("archive").unwrap());
+    }
 }
