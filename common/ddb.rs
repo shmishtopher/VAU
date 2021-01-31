@@ -29,7 +29,7 @@ impl<'a> Iterator for Samples<'a> {
         // Find the start of the next sample
         while !self.sound_bank[self.position .. self.position + 3].starts_with(b"SND") {
             self.position += 1;
-            if self.position >= self.sound_bank.len() {
+            if self.position + 3 >= self.sound_bank.len() {
                 return None
             }
         }
@@ -39,7 +39,9 @@ impl<'a> Iterator for Samples<'a> {
         sample_size.copy_from_slice(&self.sound_bank[self.position + 4 .. self.position + 8]);
         let sample_size = u32::from_le_bytes(sample_size);
 
-        // Return the sample
-        Some(&self.sound_bank[self.position + 8 .. self.position + sample_size as usize])
+        // Return the sample and increment the counter
+        let position = self.position;
+        self.position += 1;
+        Some(&self.sound_bank[position + 8 .. position + sample_size as usize])
     }
 }

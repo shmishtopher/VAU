@@ -59,7 +59,7 @@ fn main() {
                     let wav: Vec<u8> = wav.into();
 
                     match fs::write(format!("{}/{}.wav", out_dir, i), wav) {
-                        Ok(_) => println!("Unpacked archive to '{}'", out_dir),
+                        Ok(_) => println!("Found sample '{}'", i),
                         Err(_) => println!("Failed to unpack sample")
                     }
                 }
