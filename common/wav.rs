@@ -70,3 +70,10 @@ impl Wav {
         }
     }
 }
+
+
+impl Default for Wav {
+    fn default() -> Self {
+        Wav::new(AudioFormat::PCM, 1, 16, 44100)
+    }
+}
