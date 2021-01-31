@@ -14,3 +14,16 @@ pub enum AudioFormat {
     ULaw,
     Extensible
 }
+
+
+impl From<AudioFormat> for u16 {
+    fn from(format: AudioFormat) -> u16 {
+        match format {
+            AudioFormat::PCM        => 0x0001,
+            AudioFormat::IeeeFloat  => 0x0003,
+            AudioFormat::ALaw       => 0x0006,
+            AudioFormat::ULaw       => 0x0007,
+            AudioFormat::Extensible => 0xFFFE
+        }
+    }
+}
