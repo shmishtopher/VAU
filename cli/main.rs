@@ -4,11 +4,12 @@
 
 
 use std::path::Path;
+use std::fs;
 use clap::clap_app;
 use clap::value_t;
 
 
-fn main() {    
+fn main() { 
     let matches = clap_app!(app =>
         (version: "0.2.0-alpha")
         (author: "Shmish <c.schmitt@my.ccsu.edu")
@@ -23,6 +24,19 @@ fn main() {
     // Default bit depth and sample rate
     let bit_depth = value_t!(matches, "BIT_DEPTH", u32).unwrap_or(32);
     let sample_rate = value_t!(matches, "SAMPLE_RATE", u32).unwrap_or(22050);
+
+    // Open up archive file
+    let archive = fs::read(matches.value_of("ARCHIVE").unwrap()).unwrap();
+
+    // Write samples to out file (if present)
+    if let Some(out_file) = matches.value_of("OUT_FILE") {
+        println!("{}", out_file);
+    }
+
+    // Write samples to directory (if present)
+    if let Some(out_dir) = matches.value_of("OUT_DIR") {
+        println!("{}", out_dir);
+    }
 }
 
 
