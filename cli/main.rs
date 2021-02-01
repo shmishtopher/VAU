@@ -30,6 +30,12 @@ fn main() {
             .long("outFile")
             .short("f")
             .takes_value(true))
+        .arg(Arg::with_name("bitDepth")
+            .help("The bit deapth of the samples")
+            .long("depth")
+            .short("b")
+            .default_value("32")
+            .takes_value(true))
         .get_matches();
 
 
