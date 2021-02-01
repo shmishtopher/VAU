@@ -12,9 +12,14 @@ fn main() {
         (version: "0.2.0-alpha")
         (author: "Shmish <c.schmitt@my.ccsu.edu")
         (about: "A tool to unpack and repack vocaloid voicebanks")
+        (usage: "vau [OPTIONS] <archive>")
         (@arg ARCHIVE: <archive> {validate_archive} "The archive file (.ddb) to unpack")
-        (@arg BIT_DEPTH: -d --depth [bit_depth] "Configures the bit depth for of the samples, defaults to 32")
+        (@arg BIT_DEPTH: -b --bits [bit_depth] "Configures the bit depth for of the samples, defaults to 32")
         (@arg SAMPLE_RATE: -r --rate [sample_rate] "Configures the sample rate of the samples, defaults to 22050")
+        (@group OUTPUT_FORMAT +required =>
+            (@arg OUT_FILE: -f --outFile [out_file] "Concatenate and emit samples to a single file")
+            (@arg OUT_DIR: -d --outDir [out_dir] "Place each sample in its own file in this directory")
+        )
     ).get_matches();
 }
 
