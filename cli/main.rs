@@ -35,6 +35,9 @@ fn main() {
             .long("depth")
             .short("b")
             .default_value("32")
+            .possible_value("32")
+            .possible_value("16")
+            .possible_value("8")
             .takes_value(true))
         .get_matches();
 
