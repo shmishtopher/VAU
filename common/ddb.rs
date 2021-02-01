@@ -7,7 +7,7 @@
 /// all of the PCM encoded data slices in the ddb
 /// archive.
 pub struct Samples<'a> {
-    position: usize,
+    start: usize,
     sound_bank: &'a [u8]
 }
 
@@ -15,7 +15,7 @@ pub struct Samples<'a> {
 impl<'a> Samples<'a> {
     pub fn from_bytes(bytes: &'a [u8]) -> Self {
         Samples {
-            position: 0,
+            start: 0,
             sound_bank: bytes
         }
     }
@@ -26,22 +26,25 @@ impl<'a> Iterator for Samples<'a> {
     type Item = &'a [u8];
 
     fn next(&mut self) -> Option<Self::Item> {
-        // Find the start of the next sample
-        while !self.sound_bank[self.position .. self.position + 3].starts_with(b"SND") {
-            self.position += 1;
-            if self.position + 3 >= self.sound_bank.len() {
-                return None
-            }
+        let mut head = self.start;
+        let mut last = self.start + 4;
+
+        while last < self.sound_bank.len() && !self.sound_bank[head .. last].starts_with(b"SND ") {
+            head += 1;
+            last += 1;
         }
 
-        // Parse the length of the sample
-        let mut sample_size = [0u8; 4];
-        sample_size.copy_from_slice(&self.sound_bank[self.position + 4 .. self.position + 8]);
-        let sample_size = u32::from_le_bytes(sample_size);
+        if self.sound_bank[head .. last].starts_with(b"SND ") {
+            let mut size = [0u8; 4];
+            size.copy_from_slice(&self.sound_bank[head + 4 .. head + 8]);
+            let size = u32::from_le_bytes(size);
 
-        // Return the sample and increment the counter
-        let position = self.position;
-        self.position += 1;
-        Some(&self.sound_bank[position + 8 .. position + sample_size as usize])
+            self.start = head + 1;
+
+            Some(&self.sound_bank[head + 16 .. head + 16 + size as usize])
+        }
+        else {
+            None
+        }
     }
 }
