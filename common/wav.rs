@@ -60,7 +60,7 @@ pub struct Wav {
 
 
 impl Wav {
-    fn new(format: AudioFormat, channels: u16, bit_depth: u16, sample_rate: u32) -> Self {
+    pub fn new(format: AudioFormat, channels: u16, bit_depth: u16, sample_rate: u32) -> Self {
         Wav {
             format: format.into(),
             samples: Vec::new(),
@@ -68,6 +68,10 @@ impl Wav {
             bit_depth,
             sample_rate,
         }
+    }
+
+    pub fn write(&mut self, bytes: &[u8]) {
+        self.samples.extend(bytes);
     }
 }
 
