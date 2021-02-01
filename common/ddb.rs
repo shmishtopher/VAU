@@ -29,7 +29,7 @@ impl<'a> Iterator for Samples<'a> {
         let mut head = self.start;
         let mut last = self.start + 4;
 
-        while last < self.sound_bank.len() && !self.sound_bank[head .. last].starts_with(b"SND ") {
+        while last < self.sound_bank.len() && !self.sound_bank[head .. last].starts_with(b"SND") {
             head += 1;
             last += 1;
         }
