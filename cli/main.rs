@@ -12,6 +12,9 @@ fn main() {
         (version: "0.2.0-alpha")
         (author: "Shmish <c.schmitt@my.ccsu.edu")
         (about: "A tool to unpack and repack vocaloid voicebanks")
+        (@arg ARCHIVE: <archive> {validate_archive} "The archive file (.ddb) to unpack")
+        (@arg BIT_DEPTH: -d --depth [bit_depth] "Configures the bit depth for of the samples, defaults to 32")
+        (@arg SAMPLE_RATE: -r --rate [sample_rate] "Configures the sample rate of the samples, defaults to 22050")
     ).get_matches();
 }
 
@@ -20,11 +23,11 @@ fn main() {
 /// provided by the user.  We check to see if the
 /// provided file extension is ".ddb" and the
 /// path to the archive exists.
-fn validate_archive(path: &str) -> Result<(), String> {
+fn validate_archive(path: String) -> Result<(), String> {
     if !path.ends_with(".ddb") {
         Err(String::from("The file format must be .ddb"))
     }
-    else if !Path::new(path).exists() {
+    else if !Path::new(&path).exists() {
         Err(String::from("The file could not be found"))
     }
     else {
