@@ -35,10 +35,17 @@ fn main() {
             .long("depth")
             .short("b")
             .default_value("32")
+            .possible_value("64")
+            .possible_value("48")
             .possible_value("32")
             .possible_value("16")
             .possible_value("8")
             .takes_value(true))
+        .arg(Arg::with_name("sampleRate")
+            .help("The sample rate of the samples")
+            .long("rate")
+            .short("r")
+            .default_value("22050"))
         .get_matches();
 
 
