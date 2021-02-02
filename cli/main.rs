@@ -7,6 +7,9 @@ use std::path::Path;
 use std::fs;
 use clap::clap_app;
 use clap::value_t;
+use common::ddb::Samples;
+use common::wav::Wav;
+use common::wav::AudioFormat;
 
 
 fn main() { 
@@ -22,7 +25,7 @@ fn main() {
     ).get_matches();
 
     // Default bit depth and sample rate
-    let bit_depth = value_t!(matches, "BIT_DEPTH", u32).unwrap_or(32);
+    let bit_depth = value_t!(matches, "BIT_DEPTH", u16).unwrap_or(32);
     let sample_rate = value_t!(matches, "SAMPLE_RATE", u32).unwrap_or(22050);
 
     // Open up archive file
@@ -30,7 +33,22 @@ fn main() {
 
     // Write samples to out file (if present)
     if let Some(out_file) = matches.value_of("OUT_FILE") {
-        println!("{}", out_file);
+        let mut wav = Wav::new(AudioFormat::PCM, 1, bit_depth, sample_rate);
+        let samples = Samples::from_bytes(&archive);
+
+        for sample in samples {
+            wav.write(sample);
+        }
+
+        let wav: Vec<u8> = wav.into();
+        Path::new(out_file).parent().map(fs::create_dir_all);
+        
+        if fs::write(out_file, wav).is_ok() {
+            println!("Successfully unpacked archive to {}", out_file);
+        }
+        else {
+            println!("Failed to unpack archive");
+        }
     }
 
     // Write samples to directory (if present)
