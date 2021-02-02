@@ -53,7 +53,20 @@ fn main() {
 
     // Write samples to directory (if present)
     if let Some(out_dir) = matches.value_of("OUT_DIR") {
-        println!("{}", out_dir);
+        if fs::create_dir_all(out_dir).is_ok() {
+            for (i, sample) in Samples::from_bytes(&archive).enumerate() {
+                let mut wav = Wav::new(AudioFormat::PCM, 1, bit_depth, sample_rate);
+                wav.write(sample);
+                let wav: Vec<u8> = wav.into();
+
+                if fs::write(format!("{}/{}.wav", out_dir, i), wav).is_ok() {
+                    println!("Successfully unpacked sample #{}", i);
+                }
+                else {
+                    println!("Failed to unpack sample #{}", i);
+                }
+            }
+        }
     }
 }
 
