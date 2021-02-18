@@ -49,10 +49,6 @@ jobs:
               os: windows-latest
               name: vau-aarch64-pc-windows-msvc.zip
 
-            - target: x86_64-unknown-freebsd
-              os: ubuntu-latest
-              name: vau-x86_64-unknown-freebsd.tar.gz
-
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
@@ -104,3 +100,32 @@ jobs:
           name: ${{ matrix.name }}
           path: ${{ matrix.name }}
       
+  # Create a release
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repo
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Download artifacts
+      - name: Setup | Artifacts
+        uses: actions/download-artifact@v2
+
+      # Verify artifacts
+      - name: Setup | Checksums
+        run: for file in vau-*/vau-*; do openssl dgst -sha256 -r "$file" | awk '{print $1}' > "${file}.sha256"; done
+
+      # Publish release
+      - name: Build | Publish
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            vau-*/vau-*
+            LICENCE
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
