@@ -49,10 +49,6 @@ jobs:
               os: windows-latest
               name: vau-aarch64-pc-windows-msvc.zip
 
-            - target: x86_64-unknown-freebsd
-              os: ubuntu-latest
-              name: vau-x86_64-unknown-freebsd.tar.gz
-
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     steps:
