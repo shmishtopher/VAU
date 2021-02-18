@@ -116,10 +116,6 @@ jobs:
       - name: Setup | Artifacts
         uses: actions/download-artifact@v2
 
-      # Verify artifacts
-      - name: Setup | Checksums
-        run: for file in vau-*/vau-*; do openssl dgst -sha256 -r "$file" | awk '{print $1}' > "${file}.sha256"; done
-
       # Publish release
       - name: Build | Publish
         uses: softprops/action-gh-release@v1
