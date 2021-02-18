@@ -82,7 +82,7 @@ jobs:
           cd target/${{ matrix.target }}/release
           mv cli.exe vau.exe
           strip vau.exe
-          7z a ../../../${{ matrix.name }} vau.exe
+          7z a ../../../${{ matrix.name }} vau.exe ../../../LICENCE
           cd -
   
       # Process all other artifacts
@@ -92,7 +92,7 @@ jobs:
           cd target/${{ matrix.target }}/release
           mv cli vau
           strip vau || true
-          tar czvf ../../../${{ matrix.name }} vau
+          tar czvf ../../../${{ matrix.name }} vau ../../../LICENCE
           cd -
       
       # Upload build artifacts
