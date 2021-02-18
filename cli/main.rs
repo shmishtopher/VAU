@@ -23,7 +23,7 @@ use common::wav::AudioFormat;
 
 fn main() { 
     let matches = clap_app!(app =>
-        (version: "0.3.0-alpha")
+        (version: "0.4.0-alpha")
         (author: "Shmish <c.schmitt@my.ccsu.edu")
         (about: "A tool to unpack and repack vocaloid voicebanks")
         (@setting GlobalVersion)
