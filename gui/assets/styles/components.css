@@ -1,0 +1,113 @@
+/**
+ * Copyright 2021 Christopher K. Schmitt "Shmish"
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+.flair {
+  width: auto;
+  height: 100%;
+
+  flex-grow: 1;
+  flex-basis: 0;
+
+  background-color: #9EC4FB;
+  background-image: url(../media/topography.svg);
+}
+
+.btn {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  box-sizing: border-box;
+
+  border-radius: 3px;
+}
+
+.h-bar {
+  margin-top: 0;
+  margin-bottom: 40px;
+
+  border-bottom-style: solid;
+  border-bottom-color: rgba(128, 128, 128, 0.5);
+  border-bottom-width: 1px;
+}
+
+.round {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 40px;
+  width: 40px;
+
+  border-radius: 6px;
+}
+
+.tag {
+  margin-left: 15px;
+  margin-right: 30px;
+}
+
+.file {
+  width: 100%;
+  height: auto;
+
+  padding: 3px;
+  margin: 60px 0 0 0;
+
+  border-style: solid;
+  border-color: rgba(128, 128, 128, 0.5);
+  border-width: 1px;
+  border-radius: 6px;
+
+  box-sizing: border-box;
+}
+
+.file span:first-child {  
+  padding: 4px 10px;
+  margin-right: 10px;
+  
+  display: inline-flex;
+  box-sizing: border-box;
+  
+  border-radius: 3px;
+  
+  background: rgba(128, 128, 128, 0.3);
+  
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.file span:first-child:hover { background: rgba(128, 128, 128, 0.4); }
+
+h1 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 800;
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+h3 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 12px;
+  color: rgba(128, 128, 128, 0.5);
+}

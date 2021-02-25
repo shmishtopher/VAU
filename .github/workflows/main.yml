@@ -70,7 +70,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --bin cli --release --target ${{ matrix.target }}
+          args: --all --release --target ${{ matrix.target }}
           use-cross: ${{ matrix.os == 'ubuntu-latest' }}
       
       # Process windows artifacts
@@ -79,8 +79,10 @@ jobs:
         run: |
           cd target/${{ matrix.target }}/release
           mv cli.exe vau.exe
+          mv gui.exe vau_gui.exe
           strip vau.exe
-          7z a ../../../${{ matrix.name }} vau.exe ../../../LICENCE
+          strip vau_gui.exe
+          7z a ../../../${{ matrix.name }} vau.exe vau_gui.exe ../../../LICENCE
           cd -
   
       # Process all other artifacts
@@ -89,8 +91,10 @@ jobs:
         run: |
           cd target/${{ matrix.target }}/release
           mv cli vau
+          mv gui vau_gui
           strip vau || true
-          tar czvf ../../../${{ matrix.name }} vau ../../../LICENCE
+          strip vau_gui || true
+          tar czvf ../../../${{ matrix.name }} vau vau_gui ../../../LICENCE
           cd -
       
       # Upload build artifacts
