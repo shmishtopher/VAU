@@ -30,3 +30,8 @@ function disable() {
 function enable() {
   loader.style.display = 'none'
 }
+
+
+function setText(selector, text) {
+  document.querySelector(selector).innerText = text
+}

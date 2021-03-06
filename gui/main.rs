@@ -13,6 +13,11 @@
 
 
 use rust_embed::RustEmbed;
+use tinyfiledialogs::message_box_ok;
+use tinyfiledialogs::open_file_dialog;
+use tinyfiledialogs::save_file_dialog;
+use tinyfiledialogs::select_folder_dialog;
+use tinyfiledialogs::MessageBoxIcon;
 use actix_web::rt::System;
 use actix_web::web;
 use actix_web::App;
@@ -79,6 +84,13 @@ async fn main() {
     let address = address_rx.recv().unwrap();
 
     println!("{}", address);
+    // Extraction params
+    let mut ddb_file: Option<String> = None;
+    let mut wav_file: Option<String> = None;
+    let mut output: Option<String> = None;
+
+    let mut extract_wav_multiple = false;
+    let mut extract_wav_single = false;
 
     // Setup webview
     web_view::builder()
@@ -88,7 +100,56 @@ async fn main() {
         .resizable(false)
         .content(Content::Url(format!("http://{}", address)))
         .user_data(())
-        .invoke_handler(|_, _| Ok(()))
+        .invoke_handler(|webview, args| {
+            match args {
+                "SET_DDB_FILE" => {
+                    ddb_file = open_file_dialog("DDB File", "*.ddb", None);
+                    
+                    let display_text = match &ddb_file {
+                        Some(file) => file.escape_default().to_string(),
+                        None       => "No file selected".to_owned()
+                    };
+
+                    webview.eval(&format!("setText('#DDB', '{}')", display_text)).unwrap();
+                },
+
+                "SET_WAV_FILE" => {
+                    wav_file = save_file_dialog("Select or create a .wav file", "*.wav");
+
+                    let display_text = match &wav_file {
+                        Some(file) => file.escape_default().to_string(),
+                        None       => "No file selected".to_owned()
+                    };
+
+                    webview.eval(&format!("setText('#WAV', '{}')", display_text)).unwrap();
+                }
+
+                "SET_OUTPUT" => {
+                    output = select_folder_dialog("Select output directory", "");
+
+                    let display_text = match &output {
+                        Some(file) => file.escape_default().to_string(),
+                        None       => "No directory selected".to_owned()
+                    };
+
+                    webview.eval(&format!("setText('#OUTPUT', '{}')", display_text)).unwrap();
+                }
+
+                "EXTRACT" => {
+                    webview.eval("disable()").unwrap();
+                    // Code...
+                    webview.eval("enable()").unwrap();
+                    message_box_ok("Done!", "Done!", MessageBoxIcon::Info);
+                },
+
+                "TOGGLE_EXTRACT_WAV_MULTIPLE" => extract_wav_multiple = !extract_wav_multiple,
+                "TOGGLE_EXTRACT_WAV_SINGLE" => extract_wav_single = !extract_wav_single,
+
+                _ => message_box_ok("RPC Error", "An undefined RPC command was sent", MessageBoxIcon::Error)
+            }
+
+            Ok(())
+        })
         .run()
         .unwrap();
 
