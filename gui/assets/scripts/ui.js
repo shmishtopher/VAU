@@ -14,6 +14,19 @@
  */
 
 
+const loader = document.querySelector('.loader')
+
+
 function step(n) {
   document.body.setAttribute('step', n)
+}
+
+
+function disable() {
+  loader.style.display = 'flex'
+}
+
+
+function enable() {
+  loader.style.display = 'none'
 }
