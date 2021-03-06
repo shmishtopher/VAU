@@ -76,6 +76,28 @@ limitations under the License.
         <h3>Step 2/3</h3>
         <h1>Settings</h1>
 
+        <div class="h-50px w-full"></div>
+
+        <div class="flex-row">
+          <input type="checkbox" name="wav_individual" id="wav_individual">
+          <label for="wav_individual"><h3 class="tag">Extract individual waveform samples</h3></label>
+        </div>
+
+        <div class="flex-row">
+          <input type="checkbox" name="wav_single" id="wav_single">
+          <label for="wav_single"><h3 class="tag">Extract concatenated waveform file</h3></label>
+        </div>
+
+        <div class="flex-row">
+          <input type="checkbox" name="frm" id="frm" disabled>
+          <label for="frm"><h3 class="tag">Extract frame files (not implemented)</h3></label>
+        </div>
+
+        <div class="flex-row">
+          <input type="checkbox" name="env" id="env" disabled>
+          <label for="env"><h3 class="tag">Extract envelope files (not implemented)</h3></label>
+        </div>
+
         <div class="flex-row w-175px float-bottom float-right">
           <div class="btn tertiary hover float-left" onclick="step(1)">Back</div>
           <div class="btn primary hover float-right" onclick="step(3)">Next</div>
@@ -85,6 +107,16 @@ limitations under the License.
       <form class="w-full h-full flex-col step-3">
         <h3>Step 3/3</h3>
         <h1>Outputs</h1>
+
+        <div class="file flex-row">
+          <span>Archive extract location</span>
+          <h3 id="archive_extract">No directory selected</h3>
+        </div>
+
+        <div class="file flex-row">
+          <span>.wav extract location (if applicable)</span>
+          <h3 id="DDI">No file selected</h3>
+        </div>
 
         <div class="flex-row w-175px float-bottom float-right">
           <div class="btn tertiary hover float-left" onclick="step(2)">Back</div>
